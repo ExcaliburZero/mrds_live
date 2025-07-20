@@ -46,6 +46,6 @@ async fn get_data() -> (StatusCode, String) {
 
         (StatusCode::OK, contents)
     } else {
-        (StatusCode::INTERNAL_SERVER_ERROR, "error".to_string())
+        (StatusCode::OK, "".to_string())
     }
 }

@@ -17,10 +17,7 @@ async function main() {
     while (true) {
         // Download the latest version of the data
         const data = preprocessData(await downloadData());
-        console.log(data);
-
         const lastRow = data[data.length - 1];
-        console.log(lastRow);
 
         // Clear out the existing tags so we don't duplicate them
         mainDiv.innerHTML = "";
@@ -202,8 +199,6 @@ function addStatBar(svg, x, y, key, barColor, lastRow) {
     let inset = 0;
     const rounded = 10;
 
-    console.log(lastRow);
-
     svg.append("rect")
         .attr("x", x)
         .attr("y", y)
@@ -250,24 +245,26 @@ function addStatBar(svg, x, y, key, barColor, lastRow) {
         .domain([0, 999]).nice()
         .range([0, width - 15]);
 
-    svg.selectAll("group1")
-        .data([lastRow])
-        .enter()
-        .append("rect")
-        .attr("x", x)
-        .attr("y", y + inset + 5)
-        .attr("width", d => xScale(d[key]))
-        .attr("height", 30)
-        .attr("fill", barColor);
+    if (typeof lastRow !== "undefined") {
+        svg.selectAll("group1")
+            .data([lastRow])
+            .enter()
+            .append("rect")
+            .attr("x", x)
+            .attr("y", y + inset + 5)
+            .attr("width", d => xScale(d[key]))
+            .attr("height", 30)
+            .attr("fill", barColor);
 
-    svg.selectAll("group5")
-        .data([lastRow])
-        .enter()
-        .append("text")
-        .attr("class", "statBarValue")
-        .attr("x", x + 20)
-        .attr("y", y + inset + 27)
-        .text(d => d[key]);
+        svg.selectAll("group5")
+            .data([lastRow])
+            .enter()
+            .append("text")
+            .attr("class", "statBarValue")
+            .attr("x", x + 20)
+            .attr("y", y + inset + 27)
+            .text(d => d[key]);
+    }
 }
 
 function addConditionBoxes(svg, x, y, lastRow) {
@@ -348,8 +345,6 @@ function addConditionValue(svg, x, y, key, lastRow) {
     let inset = 0;
     const rounded = 10;
 
-    console.log(lastRow);
-
     svg.append("rect")
         .attr("x", x)
         .attr("y", y)
@@ -392,15 +387,17 @@ function addConditionValue(svg, x, y, key, lastRow) {
         .attr("ry", rounded)
         .attr("fill", "#efc673");
 
-    svg.selectAll("group5")
-        .data([lastRow])
-        .enter()
-        .append("text")
-        .attr("class", "statBarValue")
-        .attr("x", x + 20 + 50)
-        .attr("y", y + inset + 27)
-        .attr("text-anchor", "end")
-        .text(d => d[key]);
+    if (typeof lastRow !== "undefined") {
+        svg.selectAll("group5")
+            .data([lastRow])
+            .enter()
+            .append("text")
+            .attr("class", "statBarValue")
+            .attr("x", x + 20 + 50)
+            .attr("y", y + inset + 27)
+            .attr("text-anchor", "end")
+            .text(d => d[key]);
+    }
 }
 
 function addPlot(svg, x, y, width, height, data) {
