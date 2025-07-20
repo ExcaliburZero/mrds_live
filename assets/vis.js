@@ -34,8 +34,8 @@ async function main() {
             .attr("height", height);
 
         addBackground(svg, 0, 0, width, height);
-        addStatBoxes(svg, 20, 850, lastRow);
-        addConditionBoxes(svg, 850, 850, lastRow);
+        addStatBoxes(svg, 270, 850, lastRow);
+        addConditionBoxes(svg, 40, 850, lastRow);
         addPlot(svg, 1100, 620, 800, 440, data);
 
         // Apply the SVG
