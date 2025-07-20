@@ -34,4 +34,4 @@ For a demo, see the [following video](https://www.youtube.com/watch?v=StDosnOBaT
 1. Run DeSmuME and start the ROM for the game
 2. In the menu bar, click on `Tools > Lua Scripting > record_data.lua`
 3. In the folder you extracted the `.zip` file to, double click on `mrds_live.exe` (or `mrds_live` on Linux) to run the server we will have OBS connect to
-4. In OBS, edit the Browser source and click on the "Refresh cache of the current page" button
+4. In OBS, edit the Browser source and click on the `Refresh cache of the current page` button
