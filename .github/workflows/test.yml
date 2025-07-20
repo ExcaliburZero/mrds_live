@@ -4,12 +4,47 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+
+    name: Build and test on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+          - os: windows-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Get version number
+        run: |
+          git describe
+          # Do it both ways, the Windows way then the Linux way
+          echo "RELEASE_VERSION=$(git describe)" >> $env:GITHUB_ENV
+          echo "RELEASE_VERSION=$(git describe)" >> $GITHUB_ENV
 
       - uses: actions-rust-lang/setup-rust-toolchain@v1
 
       - name: Build
         run: cargo build --release
+
+      - name: Package
+        run: |
+          mkdir mrds_live
+          cp -r assets mrds_live/assets
+          cp record_data.lua mrds_live/
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            cp target/release/mrds_live mrds_live/
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+            cp target/release/mrds_live.exe mrds_live/
+          fi
+        shell: bash
+
+      - name: Archive executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: mrds_live_${{ env.RELEASE_VERSION }}_${{ runner.os }}
+          path: mrds_live/*
