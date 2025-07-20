@@ -1,0 +1,37 @@
+body {
+    margin: 0px;
+    background-color: #ffffff;
+
+}
+
+text {
+    font-family: sans-serif;
+}
+
+.statBarValue {
+    font-size:  20px;
+    font-weight: bold;
+    fill: #000000;
+
+    /*
+    paint-order: stroke;
+    stroke: #000000;
+    stroke-width: 2px;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    fill: #ffffff;
+    */
+}
+
+.statBarLabel {
+    font-size:  20px;
+    font-weight: bold;
+    fill: #000000;
+
+    /*paint-order: stroke;
+    stroke: #000000;
+    stroke-width: 4px;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+    fill: #ffffff;*/
+}
