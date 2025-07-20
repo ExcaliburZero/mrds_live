@@ -1,8 +1,18 @@
 async function downloadData() {
-    return await d3.csv("data");
+    try {
+        return await d3.csv("data");
+    } catch (error) {
+        // If data download fails, then we want to clear the display and wait the normal time
+        // period to retry. We want the streamer to quickly notice that the server is down.
+        return undefined;
+    }
 }
 
 function preprocessData(data) {
+    if (typeof data === "undefined") {
+        return [];
+    }
+
     const startingWeek = d3.min(data, d => d.week_full);
     for (let entry of data) {
         entry.week_full = entry.week_full - startingWeek;
