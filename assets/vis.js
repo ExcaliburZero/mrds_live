@@ -2,12 +2,21 @@ async function downloadData() {
     return await d3.csv("data");
 }
 
+function preprocessData(data) {
+    const startingWeek = d3.min(data, d => d.week_full);
+    for (let entry of data) {
+        entry.week_full = entry.week_full - startingWeek;
+    }
+
+    return data;
+}
+
 async function main() {
     const updateIntervalMilliseconds = 2000;
 
     while (true) {
         // Download the latest version of the data
-        const data = await downloadData();
+        const data = preprocessData(await downloadData());
         console.log(data);
 
         const lastRow = data[data.length - 1];
@@ -27,6 +36,7 @@ async function main() {
         addBackground(svg, 0, 0, width, height);
         addStatBoxes(svg, 20, 850, lastRow);
         addConditionBoxes(svg, 850, 850, lastRow);
+        addPlot(svg, 1100, 620, 800, 440, data);
 
         // Apply the SVG
         mainDiv.append(svg.node());
@@ -391,6 +401,64 @@ function addConditionValue(svg, x, y, key, lastRow) {
         .attr("y", y + inset + 27)
         .attr("text-anchor", "end")
         .text(d => d[key]);
+}
+
+function addPlot(svg, x, y, width, height, data) {
+    addScreenBox(svg, x, y, width, height);
+
+    const xOffset = 45;
+    const yRevOffset = 20;
+
+    const xInset = 30;
+    const yInset = 50;
+
+    const plotWidth = width - xInset * 2;
+    const plotHeight = height - yInset * 2;
+
+    const xScale = d3.scaleLinear()
+        .domain(d3.extent(data, d => d.week_full))
+        .range([x + xInset + xOffset, x + xInset + plotWidth]);
+
+    const yScale = d3.scaleLinear()
+        .domain([0, 1000])
+        .range([y + plotHeight + yInset, y + yInset - yRevOffset]);
+
+    svg.append("g")
+        .attr("transform", "translate(0," + (y + height - yInset) + ")")
+        .call(d3.axisBottom(xScale))
+        .style("font-size", "20px");
+
+    svg.append("g")
+        .attr("transform", "translate(" + (x + xInset + xOffset) + ",0)")
+        .call(d3.axisLeft(yScale))
+        .style("font-size", "20px");
+
+    const cases = [
+        ["life", "#52d642"],
+        ["defense", "#ef9429"],
+        ["speed", "#ffef31"],
+        ["skill", "#de73e7"],
+        ["intelligence", "#949cf7"],
+        ["power", "#e75252"],
+    ];
+
+    for (const entry of cases) {
+        const field = entry[0];
+        const color = entry[1];
+
+        svg.append("path")
+            .datum(data)
+            .attr("cx", d => xScale(d.week_full))
+            .attr("cy", d => yScale(d[field]))
+            .attr("r", 2.0)
+            .attr("fill", "none")
+            .attr("stroke", color)
+            .attr("stroke-width", 4.0)
+            .attr("d", d3.line()
+                .x(d => xScale(d.week_full))
+                .y(d => yScale(d[field]))
+            );
+    }
 }
 
 
