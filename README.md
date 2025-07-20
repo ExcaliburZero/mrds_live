@@ -1,5 +1,5 @@
 # MRDS Live
-An unofficial stream overlay for Monster Rancher DS which shows your monsters stats, conditions, and change in stats over time.
+An unofficial stream overlay for Monster Rancher DS which shows your monsters stats, conditions, and change in stats over time. Currently this overlay only works with the DeSmuME emulator.
 
 For a demo, see the [following video](https://www.youtube.com/watch?v=StDosnOBaT4):
 
