@@ -26,6 +26,7 @@ async function main() {
 
         addBackground(svg, 0, 0, width, height);
         addStatBoxes(svg, 20, 850, lastRow);
+        addConditionBoxes(svg, 850, 850, lastRow);
 
         // Apply the SVG
         mainDiv.append(svg.node());
@@ -258,5 +259,139 @@ function addStatBar(svg, x, y, key, barColor, lastRow) {
         .attr("y", y + inset + 27)
         .text(d => d[key]);
 }
+
+function addConditionBoxes(svg, x, y, lastRow) {
+    const yOffset = 70;
+
+    addCondition(svg, x, y, "Stress", "stress", lastRow);
+    addCondition(svg, x, y + yOffset, "Fatigue", "fatigue", lastRow);
+    addCondition(svg, x, y + yOffset * 2, "Lifespan", "lifespan", lastRow);
+}
+
+function addCondition(svg, x, y, label, key, lastRow) {
+    addConditionValue(svg, x + 105, y + 5, key, lastRow);
+    addConditionLabel(svg, x, y, label);
+}
+
+function addConditionLabel(svg, x, y, label) {
+    const width = 120;
+    const height = 60;
+
+    let inset = 0;
+    const rounded = 10;
+
+    svg.append("rect")
+        .attr("x", x)
+        .attr("y", y)
+        .attr("width", width)
+        .attr("height", height)
+        .attr("rx", rounded)
+        .attr("ry", rounded)
+        .attr("fill", "#523118");
+
+    inset += 3;
+
+    svg.append("rect")
+        .attr("x", x + inset)
+        .attr("y", y + inset)
+        .attr("width", width - inset * 2)
+        .attr("height", height - inset * 2)
+        .attr("rx", rounded)
+        .attr("ry", rounded)
+        .attr("fill", "#e7b563");
+
+    inset += 3;
+
+    svg.append("rect")
+        .attr("x", x + inset)
+        .attr("y", y + inset)
+        .attr("width", width - inset * 2)
+        .attr("height", height - inset * 2)
+        .attr("rx", rounded)
+        .attr("ry", rounded)
+        .attr("fill", "#825020");
+
+    inset += 3;
+
+    svg.append("rect")
+        .attr("x", x + inset)
+        .attr("y", y + inset)
+        .attr("width", width - inset * 2)
+        .attr("height", height - inset * 2)
+        .attr("rx", rounded)
+        .attr("ry", rounded)
+        .attr("fill", "#ce9452");
+
+    inset += 27;
+
+    svg.append("text")
+        .text(label)
+        .attr("class", "statBarLabel")
+        .attr("x", x + inset - 17)
+        .attr("y", y + inset);
+}
+
+function addConditionValue(svg, x, y, key, lastRow) {
+    const width = 90;
+    const height = 50;
+
+    let inset = 0;
+    const rounded = 10;
+
+    console.log(lastRow);
+
+    svg.append("rect")
+        .attr("x", x)
+        .attr("y", y)
+        .attr("width", width)
+        .attr("height", height)
+        .attr("rx", rounded)
+        .attr("ry", rounded)
+        .attr("fill", "#523118");
+
+    inset += 1;
+
+    svg.append("rect")
+        .attr("x", x + inset)
+        .attr("y", y + inset)
+        .attr("width", width - inset * 2)
+        .attr("height", height - inset * 2)
+        .attr("rx", rounded)
+        .attr("ry", rounded)
+        .attr("fill", "#e7b563");
+
+    inset += 2;
+
+    svg.append("rect")
+        .attr("x", x + inset)
+        .attr("y", y + inset)
+        .attr("width", width - inset * 2)
+        .attr("height", height - inset * 2)
+        .attr("rx", rounded)
+        .attr("ry", rounded)
+        .attr("fill", "#825020");
+
+    inset += 2;
+
+    svg.append("rect")
+        .attr("x", x + inset)
+        .attr("y", y + inset)
+        .attr("width", width - inset * 2)
+        .attr("height", height - inset * 2)
+        .attr("rx", rounded)
+        .attr("ry", rounded)
+        .attr("fill", "#efc673");
+
+    svg.selectAll("group5")
+        .data([lastRow])
+        .enter()
+        .append("text")
+        .attr("class", "statBarValue")
+        .attr("x", x + 20 + 50)
+        .attr("y", y + inset + 27)
+        .attr("text-anchor", "end")
+        .text(d => d[key]);
+}
+
 
 main();
