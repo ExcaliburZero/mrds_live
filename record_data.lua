@@ -68,6 +68,12 @@ end
 function decode_ascii_string(bytes)
     s = ""
     for _, value in ipairs(bytes) do
+        if value == 0 then
+            -- Stop if we see a string terminator, since the data after it is not guaranteed to be
+            -- zeroed out
+            break
+        end
+
         s = s .. string.char(value)
     end
 
