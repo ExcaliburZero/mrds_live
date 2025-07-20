@@ -13,6 +13,14 @@ function preprocessData(data) {
         return [];
     }
 
+    // Only visualize data for the current monster. This filtering is done on the front-end
+    // currently since it was easier to implement. If this ends up being slow, then there might be
+    // performance benefit to doing it on the back-end.
+    const lastRow = data[data.length - 1];
+    data = data.filter(d => d.name === lastRow.name);
+
+    // Base the week number on the first week we have data for the monster. This is done in order
+    // to keep the x-axis values easier to interpret.
     const startingWeek = d3.min(data, d => d.week_full);
     for (let entry of data) {
         entry.week_full = entry.week_full - startingWeek;
