@@ -57,3 +57,9 @@ The following instructions describe the setup I use for DeSmuME with a horizonta
 2. In the menu bar, click on `Tools > Lua Scripting > record_data.lua`
 3. In the folder you extracted the `.zip` file to, double click on `mrds_live.exe` (or `mrds_live` on Linux) to run the server we will have OBS connect to
 4. In OBS, edit the Browser source and click on the `Refresh cache of the current page` button
+
+## Related links
+* [mrds_extract](https://github.com/ExcaliburZero/mrds_extract) - Set of tools for extracting data from and working with save data for Monster Rancher DS. 
+* [mrds_overlay](https://github.com/ExcaliburZero/mrds_overlay) - DeSmuME script for overlaying information such as monster stress, fatigue, and lifespan for Monster Rancher DS. 
+* [Data Crystal page for Monster Rancher DS](https://datacrystal.tcrf.net/wiki/Monster_Rancher_DS) - Information on how Monster Rancher DS works.
+* [FCEUX Lua API docs](https://fceux.com/web/help/LuaScripting.html) - Documentation for the Lua scripting API that DeSmuME provides.
