@@ -1,4 +1,4 @@
-# MRDS Live
+# MRDS Live [![test](https://github.com/ExcaliburZero/mrds_live/actions/workflows/test.yml/badge.svg)](https://github.com/ExcaliburZero/mrds_live/actions/workflows/test.yml)
 An unofficial stream overlay for Monster Rancher DS which shows your monsters stats, conditions, and change in stats over time. Currently this overlay only works with the DeSmuME emulator.
 
 For a demo, see the [following video](https://www.youtube.com/watch?v=StDosnOBaT4):
