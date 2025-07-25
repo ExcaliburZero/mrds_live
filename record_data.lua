@@ -7,6 +7,8 @@ local output_filepath = "mrds_data.csv"
 local update_interval = 0 -- seconds
 local only_update_on_change = true
 
+local record_full_monster_struct = false
+
 --------------------
 -- Code
 --------------------
@@ -31,12 +33,18 @@ function read_data()
     data["stress"] = read_11110000(0x021B6744)
     data["fatigue"] = read_00001111(0x021B6744)
 
+    data["shape"] = memory.readbytesigned(0x021B6749)
+
     data["power"] = read_11110000(0x021B6720)
     data["intelligence"] = read_00001111(0x021B6720)
     data["skill"] = read_11110000(0x021B6724)
     data["speed"] = read_00001111(0x021B6724)
     data["defense"] = read_11110000(0x021B6728)
     data["life"] = read_00001111(0x021B6728)
+
+    if record_full_monster_struct then
+        data["zzz_monster_struct"] = tostring(memory.readbyterange(0x21B66F8, 420))
+    end
 
     return data
 end
