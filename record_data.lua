@@ -26,13 +26,19 @@ function read_data()
 
     data["name"] = read_ascii_string(0x21B66F8, 12)
     data["species_id"] = read_00001111(0x021B6708)
+    data["main_breed"] = memory.readbyteunsigned(0x021B670C)
+    data["sub_breed"] = memory.readbyteunsigned(0x021B670D)
+
+    data["fame"] = memory.readbyteunsigned(0x021B6710)
 
     data["lifespan"] = read_11110000(0x021B6718)
     data["age"] = read_00001111(0x021B6714)
 
+    data["discipline"] = memory.readbytesigned(0x021B6741)
+    data["trust"] = memory.readbyteunsigned(0x021B6743)
     data["stress"] = read_11110000(0x021B6744)
     data["fatigue"] = read_00001111(0x021B6744)
-
+    data["wits"] = memory.readbyteunsigned(0x021B6748)
     data["shape"] = memory.readbytesigned(0x021B6749)
 
     data["power"] = read_11110000(0x021B6720)
