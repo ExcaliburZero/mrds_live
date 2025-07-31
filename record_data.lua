@@ -33,6 +33,7 @@ function read_data()
 
     data["lifespan"] = read_11110000(0x021B6718)
     data["age"] = read_00001111(0x021B6714)
+    data["action_points"] = read_11110000(0x021B671C)
 
     data["discipline"] = memory.readbytesigned(0x021B6741)
     data["trust"] = memory.readbyteunsigned(0x021B6743)
